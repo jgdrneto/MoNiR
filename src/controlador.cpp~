@@ -7,7 +7,7 @@ Controlador::Controlador(Reservatorio& r){
 	this->dispositivos.push_back(new Led("Vermelho",PORTNUMBER::P9_15));
 	this->dispositivos.push_back(new Led("Amarelo",PORTNUMBER::P9_13));
 	this->dispositivos.push_back(new Led("Branco",PORTNUMBER::P9_14));
-	this->dispositivos.push_back(new SensorUltrasonico("SensorUlt",PORTNUMBER::P9_12,PORTNUMBER::P9_11));
+	this->dispositivos.push_back(new SensorUltrasonico("SensorUlt",PORTNUMBER::P9_11,PORTNUMBER::P9_12));
 		
 
 }

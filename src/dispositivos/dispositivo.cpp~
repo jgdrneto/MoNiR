@@ -1,12 +1,12 @@
-void Dispositivo::iniciar(std::string nNome,std::vector<PORTNUMBER> ps, std::vector<DIRECTION> ds){
+void Dispositivo::iniciar(std::string nNome,std::vector<PORTNUMBER> ps, std::vector<DIRECTION>){
 	
 	this->nome = nNome;
 
 	for(unsigned int i=0;i<ps.size();i++){
 
-		this->portas.push_back(ps[i]);
+		this->portas.push_back(p);
 
-		GPIO::setup(ps[i],ds[i]);
+		GPIO::setup(this->p,this->direcao);
 	}
 }
 
