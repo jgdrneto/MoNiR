@@ -12,7 +12,7 @@ public:
 	double valor;
 	double usarBBB;
 
-	void iniciar(std::string,std::vector<PORTNUMBER>,std::vector<DIRECTION>,bool);
+	void iniciar(std::string,std::vector<PORTNUMBER>,std::vector<DIRECTION>);
 
 	virtual double acao()=0;
 

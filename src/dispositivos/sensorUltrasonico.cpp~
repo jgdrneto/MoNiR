@@ -10,7 +10,7 @@ SensorUltrasonico::SensorUltrasonico(std::string nome,PORTNUMBER p1,PORTNUMBER p
 	ds.push_back(DIRECTION::OUT);
 	ds.push_back(DIRECTION::IN);
 
-	this->iniciar(nome,ps,ds,usarBBB);
+	this->iniciar(nome,ps,ds);
 
 	this->valor=0;
 

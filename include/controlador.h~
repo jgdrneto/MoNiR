@@ -23,7 +23,7 @@ public:
 	Reservatorio reservatorio;
 	std::vector<Dispositivo*> dispositivos;
 
-	Controlador(Reservatorio&,bool);
+	Controlador(Reservatorio&);
 
 	void salvarRelatorio(std::string,std::vector<Medicao>&);
 

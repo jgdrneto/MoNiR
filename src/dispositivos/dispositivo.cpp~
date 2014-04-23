@@ -8,7 +8,9 @@ void Dispositivo::iniciar(std::string nNome,std::vector<PORTNUMBER> ps, std::vec
 
 		this->portas.push_back(ps[i]);
 			
-		if(nUsarBBB==true){		
+		if(nUsarBBB==true){
+
+			std::cout << "entrou no setup" << std::endl;		
 			GPIO::setup(ps[i],ds[i]);
 		}
 			

@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 	
 	bool usarBBB = false;
 	
-	if(argc>1){
+	if(argc>=2){
 		std::cout << "verdadeiro" << std::endl;
 		usarBBB = true;
 	}

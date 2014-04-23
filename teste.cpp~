@@ -1,0 +1,14 @@
+#include <iostream>
+#include <stdlib.h>
+
+#include "include/dispositivos/GPIO/GPIO.cpp"
+
+//Método principal
+int main(int argc, char *argv[]) {
+	
+	GPIO::setup(PORTNUMBER::P9_15,DIRECTION::OUT); 
+
+	GPIO::output(PORTNUMBER::P9_15,VALUE::HIGH);
+
+	return 0;
+}

@@ -3,6 +3,8 @@ Controlador::Controlador(Reservatorio& r, bool usarBBB){
 	
 	this->reservatorio = r;
 	
+	std::cout << "USAR BBB: " << usarBBB << std::endl;
+
 	this->dispositivos.push_back(new Led("Verde",PORTNUMBER::P9_16,usarBBB));
 	this->dispositivos.push_back(new Led("Vermelho",PORTNUMBER::P9_15,usarBBB));
 	this->dispositivos.push_back(new Led("Amarelo",PORTNUMBER::P9_13,usarBBB));

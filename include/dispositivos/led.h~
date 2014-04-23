@@ -6,7 +6,7 @@
 class Led : public Dispositivo{
 public:
 
-	Led(std::string,PORTNUMBER,bool);
+	Led(std::string,PORTNUMBER);
 
 	double acao();
 	double ligar();
