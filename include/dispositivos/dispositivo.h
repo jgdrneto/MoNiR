@@ -9,6 +9,7 @@ class Dispositivo{
 public:
 	std::string nome;
 	std::vector<PORTNUMBER> portas;
+	double valor;
 	
 	void iniciar(std::string,std::vector<PORTNUMBER>,std::vector<DIRECTION>);
 

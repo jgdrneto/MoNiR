@@ -6,11 +6,11 @@
 class Led : public Dispositivo{
 public:
 
-	VALUE valor;
-
 	Led(std::string,PORTNUMBER);
 
 	double acao();
+	double ligar();
+	double desligar();
 };	
 
 #include "../../src/dispositivos/led.cpp"

@@ -6,16 +6,18 @@
 #include "forma.h"
 
 class CorpoCone : public Forma{
-
+public:
 	double raioMenor;
 	double raioMaior;
 
-	double obterVolume();
-	double volumeAtual(double);
+	CorpoCone(double,double,double);
+
+	double obterVolumeTotal();
+	double obterVolumeAtual(double);
 
 
 };
 
-#include "../../src/formas/Cilindro.cpp"
+#include "../../src/formas/corpoCone.cpp"
 
 #endif

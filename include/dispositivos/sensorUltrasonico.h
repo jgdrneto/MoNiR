@@ -2,6 +2,7 @@
 #define _SENSOR_ULTRASONICO_H_
 
 #include <unistd.h>
+#include <math.h>
 
 #include "dispositivo.h"
 

@@ -2,51 +2,69 @@
 #include <stdlib.h>
 #include <vector>
 #include <unistd.h>
+#include <string>
 
-//#include "include/controlador.h"
-#include "include/dispositivos/sensorUltrasonico.h"
-#include "include/dispositivos/led.h"
+#include "include/data.h"
+#include "include/formas/cilindro.h"
+#include "include/reservatorio.h"
+#include "include/controlador.h"
+
+
+std::string obterNomeArquivo(Data& d){
+	std::string data[3]; 
+
+	for(int i =0;i<3;i++){
+		if(d[i]<10){
+			data[i] = "0"+std::to_string(d[i]);
+		}else{
+			data[i] = std::to_string(d[i]);
+		}
+	}
+
+	return "medicoes/" + data[0] + "-" + data[1] + "-" + data[2] + ".json"; 
+}
 
 //Método principal
 int main(int argc, char *argv[]) {
 	
-	std::vector<Dispositivo*> dispositivos;
-
-	dispositivos.push_back(new Led("Verde",PORTNUMBER::P9_16));
-	dispositivos.push_back(new Led("Vermelho",PORTNUMBER::P9_15));
-	dispositivos.push_back(new Led("Amarelo",PORTNUMBER::P9_13));
-	dispositivos.push_back(new Led("Branco",PORTNUMBER::P9_14));
-	dispositivos.push_back(new SensorUltrasonico("Medidor",PORTNUMBER::P9_10,PORTNUMBER::P9_11));
+	//Valores em decimetros
+	Forma* cilindro = new Cilindro(1,5);
 	
-	for(Dispositivo* d :dispositivos){
-		std::cout << d << std::endl;
+	Reservatorio r(cilindro);
+
+	Controlador c(r);
+
+	bool finalizar = true;
+
+
+	while(finalizar){
+
+		std::cout << "================================================" << std::endl;
+
+		std::cout << "Iniciando novo buffer de medições" << std::endl;
+
+		std::cout << "================================================" << std::endl;
+
+		std::cout << "" << std::endl;
+
+		std::string arquivo = obterNomeArquivo(Data::obterDataAtual());
+
+		std::vector<Medicao> medicoes = c.realizarMedicoes(10,0.5);
+
+		/*
+		for(Medicao m : medicoes){
+			std::cout << m << std::endl;
+		}
+		*/
+		//std::cout << arquivo << std::endl;
+
+		std::cout << "" << std::endl;
+
+		c.salvarRelatorio(arquivo,medicoes);
+		
+		std::cout << "Salvo medições no arquivo: " << arquivo << "\n" << std::endl;
+
 	}
-
-	dispositivos[0]->acao();
-
-	std::cout << ((Led*)dispositivos[0])->valor << std::endl;
-
-	usleep(2000000);
-
-	dispositivos[0]->acao();
-
-	std::cout << ((Led*)dispositivos[0])->valor << std::endl;
-
-	/*
-	std::vector<Medicao> mds;
-
-	mds.push_back( *(new Medicao(Data::obterDataAtual(),1000)));
-	mds.push_back( *(new Medicao(Data::obterDataAtual(),900)));
-	mds.push_back( *(new Medicao(Data::obterDataAtual(),800)));
-	mds.push_back( *(new Medicao(Data::obterDataAtual(),700)));
-	mds.push_back( *(new Medicao(Data::obterDataAtual(),600)));
-	*/
-	
-	//Controlador c; 
-
-
-
-	//c.salvarRelatorio("dados.json",mds);
 
 	return 0;
 }

@@ -12,6 +12,7 @@ Data::Data(Tipo hora,Tipo min,Tipo seg,Tipo dia ,Tipo mes,Tipo ano){
 }
 
 Data& Data::obterDataAtual(){
+	
 	time_t t = time(0);
 
 	struct tm* now = localtime( &t );

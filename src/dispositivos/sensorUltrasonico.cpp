@@ -11,9 +11,23 @@ SensorUltrasonico::SensorUltrasonico(std::string nome,PORTNUMBER p1,PORTNUMBER p
 	ds.push_back(DIRECTION::IN);
 
 	this->iniciar(nome,ps,ds);
-	
+
+	this->valor=0;
+
 }
 
+//Retorna valor em decímetros
 double SensorUltrasonico::acao(){
-	return 0;
+	
+	double result = sin(this->valor);
+
+	this->valor +=0.1; 
+	
+	//Garantindo apenas valores positivos
+	if(result<0){
+		result=(-1)*result;
+	}
+
+	//Altura máxima de 5 decimetros
+	return 5*result;
 }

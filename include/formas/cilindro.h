@@ -14,6 +14,9 @@ public:
 	double obterVolumeTotal();
 	double obterVolumeAtual(double);
 
+	Cilindro(double,double);
+
+
 };
 
 #include "../../src/formas/cilindro.cpp"

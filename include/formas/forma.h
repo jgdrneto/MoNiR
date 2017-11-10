@@ -7,8 +7,6 @@ class Forma{
 
 public:
 	
-	enum contantesForma {ALTURA=0, LARGURA=1, PROFUNDIDADE=2};
-
 	//Dimensoes da forma
 	std::vector<double> dimensoes;
 

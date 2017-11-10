@@ -34,3 +34,23 @@ double Led::acao(){
 	}
 
 }
+
+double Led::ligar(){
+	if(this->valor==VALUE::LOW){
+
+		this->valor= VALUE::HIGH;
+		//GPIO::output(this->p,VALUE::HIGH);
+	}
+
+	return this->valor;	
+}
+
+double Led::desligar(){
+	if(this->valor==VALUE::HIGH){
+
+		this->valor= VALUE::LOW;
+		//GPIO::output(this->p,VALUE::LOW);
+	}
+
+	return this->valor;
+}

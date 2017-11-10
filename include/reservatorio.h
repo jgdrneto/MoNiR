@@ -6,10 +6,13 @@
 class Reservatorio{
 
 public:
-	
+
 	Forma* forma;
 	double volumeTotal;
-	double volumeAtual;
+
+	Reservatorio();
+	Reservatorio(Forma*);
+	unsigned int obterPorcentagemCheio(double);
 
 };
 
