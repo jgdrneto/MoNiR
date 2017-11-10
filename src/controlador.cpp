@@ -124,7 +124,26 @@ void Controlador::modificarLedsNivel(unsigned int porcentagemAtual){
 }
 
 bool Controlador::modificarLedMudanca(std::vector<Medicao>& medicoes,unsigned int quantidade){
-	return false;
+	
+	std::set<double> volumes;
+
+	bool modificou = false;
+
+	for(Medicao m : medicoes){
+		volumes.insert(m.volumeAtual);
+	}
+
+	double porcentagem = ((double)volumes.size())/medicoes.size();
+
+	if(porcentagem>=0.75){
+		((Led*)obterDispositivoPorNome("Branco"))->ligar();
+		modificou = true;
+	}else{
+		((Led*)obterDispositivoPorNome("Branco"))->desligar();
+		modificou = false;
+	}
+
+	return true;
 }
 
 Dispositivo* Controlador::obterDispositivoPorNome(std::string dispNome){
