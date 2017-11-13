@@ -81,14 +81,14 @@ std::vector<Medicao>& Controlador::realizarMedicoes(unsigned int quantidade, dou
 		//Criando a medida
 		medicoes->push_back(*(new Medicao(data,volumeAtual)));
 		
-		//Modifica o led branco de mudança de nível
-		bool mandarEmail = modificarLedMudanca(*medicoes,quantidade);
-		
 		std::cout << "Realizado " << (i+1) << "º medição do buffer" << std::endl; 
 
 		usleep(intervalo*1000000);
 
 	}
+
+	//Modifica o led branco de mudança de nível
+	bool mandarEmail = modificarLedMudanca(*medicoes,quantidade);
 
 	return *medicoes;
 
