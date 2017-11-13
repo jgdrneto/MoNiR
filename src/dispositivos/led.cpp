@@ -12,7 +12,7 @@ Led::Led(std::string nome,PORTNUMBER p){
 
 	this->iniciar(nome,ps,ds);
 
-	#ifdef USANDO_BGB
+	#ifdef USANDO_BBB
 		GPIO::output(p,VALUE::LOW);
 	#endif
 }
@@ -21,7 +21,7 @@ double Led::acao(){
 	
 	if(this->valor==VALUE::HIGH){
 
-		#ifdef USANDO_BGB
+		#ifdef USANDO_BBB
 			GPIO::output(this->portas[0],VALUE::LOW);
 		#endif
 
@@ -30,7 +30,7 @@ double Led::acao(){
 		return 0;
 	}else{
 
-		#ifdef USANDO_BGB
+		#ifdef USANDO_BBB
 			GPIO::output(this->portas[0],VALUE::HIGH);
 		#endif	
 			
@@ -46,7 +46,7 @@ double Led::ligar(){
 
 		this->valor= VALUE::HIGH;
 		
-		#ifdef USANDO_BGB
+		#ifdef USANDO_BBB
 			GPIO::output(this->portas[0],VALUE::HIGH);
 		#endif
 	}
@@ -59,7 +59,7 @@ double Led::desligar(){
 
 		this->valor= VALUE::LOW;
 
-		#ifdef USANDO_BGB
+		#ifdef USANDO_BBB
 			GPIO::output(this->portas[0],VALUE::LOW);
 		#endif
 	}
