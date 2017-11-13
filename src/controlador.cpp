@@ -16,9 +16,6 @@ void Controlador::salvarRelatorio(std::string arquivo,std::vector<Medicao>& medi
 	
 	nlohmann::json j;
 
-
-
-
 	std::ifstream i(arquivo);
 	
 	if(!i.is_open()){
