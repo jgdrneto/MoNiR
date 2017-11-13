@@ -13,6 +13,9 @@ public:
 	double volumeAtual;
 	
 	Medicao(Data&,double);
+
+	static bool comparador(Medicao i,Medicao j);
+
 };
 
 #include "../src/medicao.cpp"

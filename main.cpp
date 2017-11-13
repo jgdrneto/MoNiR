@@ -8,7 +8,7 @@
 #include "include/formas/cilindro.h"
 #include "include/reservatorio.h"
 #include "include/controlador.h"
-
+#include "include/leitor.h"
 
 std::string obterNomeArquivo(Data& d){
 	std::string data[3]; 
@@ -28,16 +28,30 @@ std::string obterNomeArquivo(Data& d){
 int main(int argc, char *argv[]) {
 	
 	//Valores em decimetros
-	Forma* cilindro = new Cilindro(1,5);
-	
-	Reservatorio r(cilindro);
+	Reservatorio* reservatorio = nullptr;
 
-	Controlador c(r);
+	Controlador* c = nullptr;
 
-	bool finalizar = true;
+	Leitor leitor;
 
+	while(reservatorio==nullptr){
+		
+		std::cout << "Tentando ler arquivo de configurações do reservatório" << std::endl;
 
-	while(finalizar){
+		reservatorio = leitor.ler("reservatorio.json"); 
+		
+		usleep(1000000);
+	}
+
+	c = new Controlador(*reservatorio);
+
+		std::cout << "================================================" << std::endl;
+
+		std::cout << "Iniciando Medições" << std::endl;
+
+		std::cout << "================================================" << std::endl;
+
+	while(true){
 
 		std::cout << "================================================" << std::endl;
 
@@ -49,18 +63,11 @@ int main(int argc, char *argv[]) {
 
 		std::string arquivo = obterNomeArquivo(Data::obterDataAtual());
 
-		std::vector<Medicao> medicoes = c.realizarMedicoes(10,0.5);
-
-		/*
-		for(Medicao m : medicoes){
-			std::cout << m << std::endl;
-		}
-		*/
-		//std::cout << arquivo << std::endl;
+		std::vector<Medicao> medicoes = c->realizarMedicoes(10,0.5);
 
 		std::cout << "" << std::endl;
 
-		c.salvarRelatorio(arquivo,medicoes);
+		c->salvarRelatorio(arquivo,medicoes);
 		
 		std::cout << "Salvo medições no arquivo: " << arquivo << "\n" << std::endl;
 

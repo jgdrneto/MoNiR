@@ -5,8 +5,10 @@ void Dispositivo::iniciar(std::string nNome,std::vector<PORTNUMBER> ps, std::vec
 	for(unsigned int i=0;i<ps.size();i++){
 
 		this->portas.push_back(ps[i]);
-
-		GPIO::setup(ps[i],ds[i]);
+		
+		#ifdef USANDO_BGB
+			GPIO::setup(ps[i],ds[i]);
+		#endif
 	}
 }
 

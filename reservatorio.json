@@ -1,0 +1,7 @@
+{
+	"RESERVATORIO":	{
+						"TIPO": "CILINDRO",
+						"ALTURA": 5,
+						"RAIO": 1
+					}
+}

@@ -75,20 +75,15 @@ std::vector<Medicao>& Controlador::realizarMedicoes(unsigned int quantidade, dou
 		//Modificar os leds de nível
 		modificarLedsNivel(porcentagemAtual);
 
-		//Modifica o led branco de mudança de nível
-		bool mandarEmail = modificarLedMudanca(*medicoes,quantidade);
-
 		//Obter data atual
 		Data data = Data::obterDataAtual();
 
 		//Criando a medida
 		medicoes->push_back(*(new Medicao(data,volumeAtual)));
-		/*
-		std::cout << "AlturaParteVazia: " << alturaParteVazia << std::endl;
-		std::cout << "AlturaParteCheia: " << alturaParteCheia << std::endl;
-		std::cout << "VolumeAtual: " << volumeAtual << std::endl;
-		std::cout << "Porcentagem atual: " << porcentagemAtual << std::endl; 
-		*/
+		
+		//Modifica o led branco de mudança de nível
+		bool mandarEmail = modificarLedMudanca(*medicoes,quantidade);
+		
 		std::cout << "Realizado " << (i+1) << "º medição do buffer" << std::endl; 
 
 		usleep(intervalo*1000000);
@@ -125,17 +120,13 @@ void Controlador::modificarLedsNivel(unsigned int porcentagemAtual){
 
 bool Controlador::modificarLedMudanca(std::vector<Medicao>& medicoes,unsigned int quantidade){
 	
-	std::set<double> volumes;
-
 	bool modificou = false;
 
-	for(Medicao m : medicoes){
-		volumes.insert(m.volumeAtual);
-	}
+	std::sort(medicoes.begin(), medicoes.end(),Medicao::comparador);
 
-	double porcentagem = ((double)volumes.size())/medicoes.size();
+	double proporcao = medicoes[0].volumeAtual/medicoes[medicoes.size()-1].volumeAtual;
 
-	if(porcentagem>=0.75){
+	if(proporcao<=0.9){
 		((Led*)obterDispositivoPorNome("Branco"))->ligar();
 		modificou = true;
 	}else{
@@ -143,7 +134,7 @@ bool Controlador::modificarLedMudanca(std::vector<Medicao>& medicoes,unsigned in
 		modificou = false;
 	}
 
-	return true;
+	return modificou;
 }
 
 Dispositivo* Controlador::obterDispositivoPorNome(std::string dispNome){
