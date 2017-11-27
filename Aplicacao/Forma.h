@@ -1,21 +1,22 @@
 #ifndef _FORMA_H_
 #define _FORMA_H_
 
-#include <vector>
-
 class Forma{
 
 public:
 	
 	//Dimensoes da forma
-	std::vector<double> dimensoes;
+	float* dimensoes;
 
 	//Obter o volume da forma
-	virtual double obterVolumeTotal() = 0;
+	virtual float ObterVolumeTotal() = 0;
 
 	//Obter volume atual do forma
-	virtual double obterVolumeAtual(double) = 0;
+	virtual float ObterVolumeAtual(float) = 0;
 
+	~Forma(){
+		delete [] dimensoes;
+	}
 };
 
 
