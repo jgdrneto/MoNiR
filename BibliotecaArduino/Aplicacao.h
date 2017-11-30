@@ -130,9 +130,15 @@ public:
 		
 		bool modificou = false;
 
-		double proporcao = medicoes[quantidade-1]/medicoes[0];
+		double med = medicoes[0];
 
-		if(proporcao<=0.9){
+		if(med==0){
+			med = 0.000000000000000000001;
+		}
+
+		double proporcao = medicoes[quantidade-1]/med;
+
+		if(proporcao<=0.8){
 			((Led*)dispositivos[LED_BRANCO])->Ligar();
 			modificou = true;
 		}else{

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Dashboard</title>
+    <title>MoNiR | Dashboard</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
@@ -42,7 +42,6 @@
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
-
       <header class="main-header">
         <!-- Logo -->
         <a href="index2.html" class="logo">
@@ -62,38 +61,13 @@
           <!-- /.search form -->
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header">MAIN NAVIGATION</li>
+            <li class="header">Navegação Principal</li>
             <li class="active treeview">
               <a href="#">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span> <i class="fa fa-angle-left pull-right"></i>
               </a>
               <ul class="treeview-menu">
-                <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-                <li><a href="index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-pie-chart"></i>
-                <span>Charts</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-                <li><a href="pages/charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-                <li><a href="pages/charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-                <li><a href="pages/charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-              </ul>
-            </li>
-            <li class="treeview">
-              <a href="#">
-                <i class="fa fa-edit"></i> <span>Forms</span>
-                <i class="fa fa-angle-left pull-right"></i>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="pages/forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-                <li><a href="pages/forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-                <li><a href="pages/forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
+                <li class="active"><a href="index.html"><i class="fa fa-circle-o"></i> Dashboard</a></li>
               </ul>
             </li>
           </ul>
@@ -107,17 +81,25 @@
         <section class="content-header">
           <h1>
             Dashboard
-            <small>Control panel</small>
+            <small>Painel de controle</small>
           </h1>
           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li class="active">Dashboard</li>
           </ol>
         </section>
 
         <!-- Main content -->
-        <section class="content">
+        <section id="main-conteudo" class="content">
           <!-- Small boxes (Stat box) -->
+          <div id="alerta" class="row" style="display: none">
+            <!-- Left col -->
+            <div class="col-xs-12">
+             <div id="text-alerta" class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" onclick="var x = document.getElementById('alerta');x.style.display='none'" >&times;</button>
+                <h4><i class="icon fa fa-warning"></i> Alerta!</h4>
+              </div>
+            </div>
+          </div>  
           <div class="row">
             <div class="col-xs-12">
               <!-- interactive chart -->
@@ -151,42 +133,43 @@
                   <h3 class="box-title">Informar Reservatório</h3>
                 </div><!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
+                <form role="form" name="form-reservatorio" onsubmit="return validateForm()">
                   <div class="box-body">
                     <div class="form-group">
-                      <label>Minimal</label>
-                      <select class="form-control select2" style="width: 100%;">
-                        <option selected="selected">Alabama</option>
-                        <option>Alaska</option>
-                        <option>California</option>
-                        <option>Delaware</option>
-                        <option>Tennessee</option>
-                        <option>Texas</option>
-                        <option>Washington</option>
+                      <label>Forma</label>
+                      <select id="selecionar-forma" name="select" class="form-control select2" style="width: 100%;" onchange ="selecionarForma(this)">
+                        <option selected="selected" value="1" >Corpo de cone</option>
+                        <option value ="2">Cilindro</option>
+                        <option value ="3">Paralelepípedo</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Email address</label>
-                      <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                      <label for="exampleInputEmail1">Raio (em dm)</label>
+                      <input name="raio" type="number" class="form-control formas cilindro" placeholder="Insira o valor do Raio" disabled="true">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Password</label>
-                      <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                      <label for="exampleInputEmail1">Raio Menor (em dm)</label>
+                      <input name="raio-menor" type="number" class="form-control formas corpocone" placeholder="Insira o valor do Raio menor">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputFile">File input</label>
-                      <input type="file" id="exampleInputFile">
-                      <p class="help-block">Example block-level help text here.</p>
+                      <label for="exampleInputEmail1">Raio Maior (em dm)</label>
+                      <input name="raio-maior" type="number" class="form-control formas corpocone" placeholder="Insira o valor do Raio maior" >
                     </div>
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox"> Check me out
-                      </label>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Altura (em dm)</label>
+                      <input name="altura" type="number" class="form-control formas corpocone paralelepipedo cilindro" placeholder="Insira o valor da altura">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Largura (em dm)</label>
+                      <input name="largura" type="number" class="form-control formas paralelepipedo" placeholder="Insira o valor da largura" disabled="true">
+                    </div>
+                    <div class="form-group">
+                      <label for="exampleInputEmail1">Profundidade (em dm)</label>
+                      <input name="profundidade" type="number" class="form-control formas paralelepipedo" placeholder="Insira o valor da Profundidade" disabled="true">
                     </div>
                   </div><!-- /.box-body -->
-
                   <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button id="criar-reservatorio" type="submit" class="btn btn-primary">Criar Reservatório</button>
                   </div>
                 </form>
               </div><!-- /.box -->
@@ -419,9 +402,12 @@
     <script src="plugins/select2/select2.full.min.js"></script>
 
     <script type="text/javascript">
+
       var socket = new WebSocket("ws://localhost:8081");
       var data = [];
       var cont = 0;
+      var mudanca = false;
+      var contadorTempo = 0;
 
       function setup() {
         // The socket connection needs two event listeners:
@@ -439,7 +425,7 @@
 
       function openSocket() {
         console.log("Socket aberto");
-        socket.send("{\"TIPO\": \"CILINDRO\",\"ALTURA\": 5,\"RAIO\": 1 }");
+        //socket.send("{\"TIPO\": \"CILINDRO\",\"ALTURA\": 5,\"RAIO\": 1 }");
       }
 
       /*
@@ -449,12 +435,54 @@
       function showData(result) {
         // when the server returns, show the result in the div:
         
+        if(mudanca==true){
+          
+          var today = new Date();
+
+          var h = today.getHours();
+          var m = today.getMinutes();
+          var s = today.getSeconds();
+
+          if(h<10){
+            h = "0"+h;
+          }
+
+          if(m<10){
+            h = "0"+h;
+          }
+
+          if(s<10){
+            h = "0"+h;
+          }
+
+          document.getElementById('text-alerta').innerHTML = "O reservatório apresentou uma mudança brusca de nível às " +  h+":"+m+":"+s;
+
+          var alerta = document.getElementById('alerta');
+          alerta.style.display='block';
+
+        }
+
         var json = JSON.parse(result.data);
 
         for(var i =0;i<json.VOLUMES.length;i++){
           data.push(json.VOLUMES[i]);
         }
         
+        mudanca = json.MUDANCA;
+
+        //Getting all select elements
+        var arraySelects = document.getElementsByClassName('formas');
+        //Disabling options at same index in other select elements
+        for(var i=0; i<arraySelects.length; i++) {
+          arraySelects[i].disabled = true;
+        }
+
+        var select =  document.getElementById('selecionar-forma');
+        select.disabled=true;
+
+        var buttom =  document.getElementById('criar-reservatorio');
+        buttom.disabled=true;
+
         console.log("Recebido: " + result.data);
 
         //xPos += int(result.data);        // convert result to an integer
@@ -472,7 +500,7 @@
             cont++;
 
             for (var i = 0; i < cont; i++) {
-              res.push([9-i+1, data[i]]);
+              res.push([10-cont+1+i, data[i]]);
             }
 
           }else{  
@@ -487,8 +515,6 @@
               data = buffer.slice();
 
             }
-
-            console.log("Tamanho:" + data.length);
 
             if (data.length >0){
               data = data.slice(1);
@@ -560,6 +586,156 @@
          * END INTERACTIVE CHART
          */
        });
+      
+      
+    function selecionarForma(selectElement){
+      //Getting all select elements
+      var arraySelects = document.getElementsByClassName('formas');
+      //Getting selected index
+      var selectedOption = selectElement.selectedIndex;
+      //Disabling options at same index in other select elements
+      for(var i=0; i<arraySelects.length; i++) {
+        arraySelects[i].disabled = true;
+
+      } 
+
+      var arrayEspecifico;
+
+      switch(selectedOption){
+        case 0:
+          arrayEspecifico = document.getElementsByClassName('corpocone');
+        break;
+        case 1:
+          arrayEspecifico = document.getElementsByClassName('cilindro');
+        break;
+        case 2:
+          arrayEspecifico = document.getElementsByClassName('paralelepipedo');
+        break;
+      }
+
+      for(var i = 0;i<arrayEspecifico.length;i++){
+        arrayEspecifico[i].disabled = false;
+      } 
+       
+    }
+
+    function validateForm() {
+      
+      var reservatorio ="";
+
+      var indice = document.forms["form-reservatorio"]["select"].selectedIndex;
+      
+      var altura = document.forms["form-reservatorio"]["altura"].value;
+
+      var obj = new Object();
+
+      var validou = false;
+
+      switch(indice){
+        case 0:
+          var raioMenor = document.forms["form-reservatorio"]["raio-menor"].value;
+          var raioMaior = document.forms["form-reservatorio"]["raio-maior"].value;
+          
+          if(raioMenor!="" && raioMaior!="" && altura!=""){
+
+            raioMenor = parseFloat(raioMenor);
+            raioMaior = parseFloat(raioMaior);
+            altura = parseFloat(altura);
+
+            obj.TIPO="CORPO_CONE";
+            obj.RAIOMENOR = raioMenor;
+            obj.RAIOMAIOR = raioMaior;
+            obj.ALTURA = altura; 
+
+            validou = true;
+
+          }else{
+            alert("Preencha os campos vazios");
+
+            validou=false;
+          }
+        break;
+        case 1:
+          //arrayEspecifico = document.getElementsByClassName('cilindro');
+          var raio = document.forms["form-reservatorio"]["raio"].value;
+          
+          if(raio!="" && altura!=""){
+
+            raio = parseFloat(raio);
+            altura = parseFloat(altura);
+
+            obj.TIPO = "CILINDRO";
+            obj.RAIO = raio;
+            obj.ALTURA = altura;
+
+            validou = true;
+
+          }else{
+            alert("Preencha os campos vazios");
+            
+            validou = false;
+          }  
+
+        break;
+        case 2:
+          
+          var largura = document.forms["form-reservatorio"]["largura"].value;
+          var profundidade = document.forms["form-reservatorio"]["profundidade"].value;
+          
+          if(altura!="" && largura!="" && profundidade!=""){
+
+            profundidade = parseFloat(profundidade);
+            largura = parseFloat(largura);
+            altura = parseFloat(altura);
+
+            obj.ALTURA = altura;
+            obj.LARGURA = largura;
+            obj.PROFUNDIDADE = profundidade;
+
+            validou = true;
+
+          }else{
+            alert("Preencha os campos vazios");
+            
+            validou = false;
+          }
+
+        break;
+      }
+
+      if(validou==true){
+
+        var jsonString = JSON.stringify(obj);
+
+        console.log("Enviar: " + jsonString);
+
+        socket.send(jsonString);
+        
+        //Getting all select elements
+        var arraySelects = document.getElementsByClassName('formas');
+        //Disabling options at same index in other select elements
+        for(var i=0; i<arraySelects.length; i++) {
+          arraySelects[i].disabled = true;
+        }
+
+        var select =  document.getElementById('selecionar-forma');
+        select.disabled=true;
+
+        var buttom =  document.getElementById('criar-reservatorio');
+        buttom.disabled=true;
+
+      }
+
+      return false;
+    }
+
+      /*
+      $('select').change(function () {
+        var optionSelected = $(this).find("option:selected");
+        var valueSelected  = optionSelected.val();
+        var textSelected   = optionSelected.text();
+      });
+      */
     </script>
   </body>
 </html>

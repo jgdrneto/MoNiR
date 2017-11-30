@@ -51,11 +51,11 @@ function readSerialData(data) {
 }
 
 function showPortClose() {
-   console.log('Porta fechada.');
+  console.log('Porta fechada.');
 }
 // this is called when the serial port has an error:
 function showError(error) {
-  console.log('Erro na porta serial: ' + error);
+  console.log('Erro na porta serial');
 }
 
 function sendToSerial(data) {
