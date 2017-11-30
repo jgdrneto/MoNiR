@@ -91,15 +91,25 @@
         <!-- Main content -->
         <section id="main-conteudo" class="content">
           <!-- Small boxes (Stat box) -->
-          <div id="alerta" class="row" style="display: none">
+          <div id="alerta-critico" class="row" style="display: none">
             <!-- Left col -->
             <div class="col-xs-12">
-             <div id="text-alerta" class="alert alert-warning alert-dismissable">
-                <button type="button" class="close" onclick="var x = document.getElementById('alerta');x.style.display='none'" >&times;</button>
+           	  <div class="alert alert-danger alert-dismissable">
+                <h4><i class="icon fa fa-warning"></i>Nível crítico alcançado!</h4>
+                <span>O reservatório está com menos de 20% da sua capacidade </span>
+              </div>
+          	</div>
+          </div> 
+          <div id="alerta" class="row" style="display: none">
+            <!-- Left col -->
+            <div class="col-xs-12" >
+              <div id="text-alerta" class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" onclick="document.getElementById('alerta').style.display='none'">&times;</button>
                 <h4><i class="icon fa fa-warning"></i> Alerta!</h4>
+                <span id="texto-alerta"></span>  
               </div>
             </div>
-          </div>  
+          </div>       
           <div class="row">
             <div class="col-xs-12">
               <!-- interactive chart -->
@@ -455,10 +465,9 @@
             h = "0"+h;
           }
 
-          document.getElementById('text-alerta').innerHTML = "O reservatório apresentou uma mudança brusca de nível às " +  h+":"+m+":"+s;
+          document.getElementById('texto-alerta').innerHTML = "O reservatório apresentou uma mudança brusca de nível às " +  h+":"+m+":"+s;
 
-          var alerta = document.getElementById('alerta');
-          alerta.style.display='block';
+         document.getElementById('alerta').style.display='block';
 
         }
 
@@ -495,6 +504,8 @@
           
           var res = [];
 
+          var alertaNivel = document.getElementById('alerta-critico');
+
           if(data.length==10){
 
             cont++;
@@ -502,6 +513,12 @@
             for (var i = 0; i < cont; i++) {
               res.push([10-cont+1+i, data[i]]);
             }
+
+            if(data[cont-1]<20){
+          		alertaNivel.style.display='block';		
+          	}else{
+          		alertaNivel.style.display='none';
+          	}
 
           }else{  
 
@@ -523,9 +540,16 @@
             for (var i = 1; i <= data.length; i++) {
               res.push([i, data[i-1]]);
             }         
-            
+           	
+            if(data[9]<20){
+          		alertaNivel.style.display='block';		
+          	}else{
+          		alertaNivel.style.display='none';
+          	}
+
             //console.log(res);
           }
+
           return res;
         }
         
@@ -545,7 +569,7 @@
           },
           yaxis: {
             min: 0,
-            max: 17,
+            max: 100,
             show: true
           },
           xaxis: {
