@@ -69,7 +69,7 @@ public:
 		for(unsigned int i=0;i<quantidade;i++){
 
 			//Altura medida no sensor ultrasonico
-			float alturaParteVazia = dispositivos[SENSOR_ULTRASONICO]->Acao();
+			float alturaParteVazia = ((int)(dispositivos[SENSOR_ULTRASONICO]->Acao()))-3;
 			//Serial.println("Altura parte vazia:" + String(alturaParteVazia));
 			
 			if(alturaParteVazia>this->reservatorio.forma->dimensoes[0]){
@@ -91,7 +91,7 @@ public:
 			//Modificar os leds de nível
 			ModificarLedsNivel(porcentagemAtual);
 
-			medicoes[i] = volumeAtual;
+			medicoes[i] = porcentagemAtual;
 
 			delay(intervalo*1000); 
 		}
@@ -130,20 +130,20 @@ public:
 		
 		bool modificou = false;
 
-		double med = medicoes[0];
+		double med = medicoes[quantidade-1];
 
 		if(med==0){
 			med = 0.000000000000000000001;
 		}
 
-		double proporcao = medicoes[quantidade-1]/med;
+		double proporcao = medicoes[0] - med;
 
-		if(proporcao<=0.8){
-			((Led*)dispositivos[LED_BRANCO])->Ligar();
-			modificou = true;
-		}else{
+		if(proporcao<=10){
 			((Led*)dispositivos[LED_BRANCO])->Desligar();
 			modificou = false;
+		}else{
+			((Led*)dispositivos[LED_BRANCO])->Ligar();
+			modificou = true;
 		}
 
 		return modificou;

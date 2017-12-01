@@ -31,7 +31,7 @@ public:
 
 		JsonObject& root = jsonBuffer.parseObject(json);
 
-		String tipo = root["TIPO"];
+		String tipo = root["FORMA"];
 		
 		//Serial.println("Tipo: " + tipo);
 

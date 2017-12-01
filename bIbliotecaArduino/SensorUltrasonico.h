@@ -36,7 +36,7 @@ public:
   		// Calculating the distance
   		float distance=duration*0.034/2;
 
-  		return distance/10;
+  		return distance;
   	}	
 };	
 

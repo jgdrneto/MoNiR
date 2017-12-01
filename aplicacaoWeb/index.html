@@ -154,27 +154,27 @@
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Raio (em dm)</label>
+                      <label for="exampleInputEmail1">Raio (em cm)</label>
                       <input name="raio" type="number" class="form-control formas cilindro" placeholder="Insira o valor do Raio" disabled="true">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Raio Menor (em dm)</label>
+                      <label for="exampleInputEmail1">Raio Menor (em cm)</label>
                       <input name="raio-menor" type="number" class="form-control formas corpocone" placeholder="Insira o valor do Raio menor">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Raio Maior (em dm)</label>
+                      <label for="exampleInputEmail1">Raio Maior (em cm)</label>
                       <input name="raio-maior" type="number" class="form-control formas corpocone" placeholder="Insira o valor do Raio maior" >
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Altura (em dm)</label>
+                      <label for="exampleInputEmail1">Altura (em cm)</label>
                       <input name="altura" type="number" class="form-control formas corpocone paralelepipedo cilindro" placeholder="Insira o valor da altura">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Largura (em dm)</label>
+                      <label for="exampleInputEmail1">Largura (em cm)</label>
                       <input name="largura" type="number" class="form-control formas paralelepipedo" placeholder="Insira o valor da largura" disabled="true">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputEmail1">Profundidade (em dm)</label>
+                      <label for="exampleInputEmail1">Profundidade (em cm)</label>
                       <input name="profundidade" type="number" class="form-control formas paralelepipedo" placeholder="Insira o valor da Profundidade" disabled="true">
                     </div>
                   </div><!-- /.box-body -->
@@ -419,6 +419,8 @@
       var mudanca = false;
       var contadorTempo = 0;
 
+
+
       function setup() {
         // The socket connection needs two event listeners:
         socket.onopen = openSocket;
@@ -438,6 +440,30 @@
         //socket.send("{\"TIPO\": \"CILINDRO\",\"ALTURA\": 5,\"RAIO\": 1 }");
       }
 
+      function obterData(){
+
+        var cn=[];
+
+        var today = new Date();
+
+        cn.push(today.getHours());
+        cn.push(today.getMinutes());
+        cn.push(today.getSeconds());
+        cn.push(today.getDate());
+        cn.push(today.getMonth()+1);
+        cn.push(today.getFullYear());
+
+        for(var i =0;i<cn.length;i++){
+          if(cn[i]<10){
+            cn[i] = "0"+String(cn[i]); 
+          }else{
+            cn[i] = String(cn[i]);
+          }
+        }
+
+        return cn.slice();
+      }
+
       /*
       showData(), below, will get called whenever there is new Data
       from the server. So there's no need for a draw() function:
@@ -446,28 +472,28 @@
         // when the server returns, show the result in the div:
         
         if(mudanca==true){
+                    
+          var dia = obterData();
+
+          var mensagem = "O reservatório apresentou uma mudança brusca de nível";
+
+          var obj = new Object();
+
+          obj.TIPO = "LOG"; 
           
-          var today = new Date();
+          obj.DATA = dia[3]+"/"+dia[4]+"/"+dia[5] + " " + dia[0]+":"+dia[1]+":"+dia[2];
 
-          var h = today.getHours();
-          var m = today.getMinutes();
-          var s = today.getSeconds();
+          obj.MENSAGEM = mensagem;
 
-          if(h<10){
-            h = "0"+h;
-          }
+          var stringJson = JSON.stringify(obj);
 
-          if(m<10){
-            h = "0"+h;
-          }
+          socket.send(stringJson);
 
-          if(s<10){
-            h = "0"+h;
-          }
+          console.log("Enviado: " + stringJson);
 
-          document.getElementById('texto-alerta').innerHTML = "O reservatório apresentou uma mudança brusca de nível às " +  h+":"+m+":"+s;
+          document.getElementById('texto-alerta').innerHTML = mensagem + " às " + dia[0] +":"+dia[1]+":"+dia[2]+ " " +dia[3]+"/"+dia[4]+"/"+dia[5];
 
-         document.getElementById('alerta').style.display='block';
+          document.getElementById('alerta').style.display='block';
 
         }
 
@@ -516,7 +542,24 @@
 
             if(data[cont-1]<20){
           		alertaNivel.style.display='block';		
-          	}else{
+          	  
+              var dia = obterData();
+
+              var obj = new Object();
+
+              obj.TIPO = "LOG"; 
+          
+              obj.DATA = dia[3]+"/"+dia[4]+"/"+dia[5] + " " + dia[0]+":"+dia[1]+":"+dia[2];
+
+              obj.MENSAGEM = "O reservatório está com menos de 20% da sua capacidade";
+
+              var stringJson = JSON.stringify(obj);
+
+              socket.send(stringJson);
+
+              console.log("Enviado: " + stringJson);
+
+            }else{
           		alertaNivel.style.display='none';
           	}
 
@@ -542,7 +585,24 @@
             }         
            	
             if(data[9]<20){
-          		alertaNivel.style.display='block';		
+          		alertaNivel.style.display='block';
+
+              var dia = obterData();
+              
+              var obj = new Object();
+
+              obj.TIPO = "LOG"; 
+          
+              obj.DATA = dia[3]+"/"+dia[4]+"/"+dia[5] + " " + dia[0]+":"+dia[1]+":"+dia[2];
+
+              obj.MENSAGEM = "O reservatório está com menos de 20% da sua capacidade";
+
+              var stringJson = JSON.stringify(obj);
+
+              socket.send(stringJson);
+
+              console.log("Enviado: " + stringJson);
+
           	}else{
           		alertaNivel.style.display='none';
           	}
@@ -655,6 +715,8 @@
 
       var validou = false;
 
+      obj.TIPO="DADO";
+
       switch(indice){
         case 0:
           var raioMenor = document.forms["form-reservatorio"]["raio-menor"].value;
@@ -666,7 +728,7 @@
             raioMaior = parseFloat(raioMaior);
             altura = parseFloat(altura);
 
-            obj.TIPO="CORPO_CONE";
+            obj.FORMA="CORPO_CONE";
             obj.RAIOMENOR = raioMenor;
             obj.RAIOMAIOR = raioMaior;
             obj.ALTURA = altura; 
@@ -688,7 +750,7 @@
             raio = parseFloat(raio);
             altura = parseFloat(altura);
 
-            obj.TIPO = "CILINDRO";
+            obj.FORMA = "CILINDRO";
             obj.RAIO = raio;
             obj.ALTURA = altura;
 
@@ -712,6 +774,7 @@
             largura = parseFloat(largura);
             altura = parseFloat(altura);
 
+            obj.FORMA = "PARALELEPIPEDO";
             obj.ALTURA = altura;
             obj.LARGURA = largura;
             obj.PROFUNDIDADE = profundidade;

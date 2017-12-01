@@ -12,9 +12,10 @@ modified 5 Nov 2017
 by Tom Igoe
 
 */
-
 // include the various libraries that you'll use:
 var SerialPort = require('serialport');			// include the serialport library
+var winston = require('winston');
+
 var	portName =  process.argv[2];						// get the port name from the command line
 var WebSocketServer = require('ws').Server;   // include the webSocket library
 
@@ -33,6 +34,27 @@ myPort.on('open', showPortOpen);    // called when the serial port opens
 myPort.on('close', showPortClose);  // called when the serial port closes
 myPort.on('error', showError);   // called when there's an error with the serial port
 parser.on('data', readSerialData);  // called when there's new data incoming
+
+
+const logFormatter = function(options) {
+    // Return string will be passed to logger.
+
+    return (options.message ? options.message : ' ') +
+        (options.meta && Object.keys(options.meta).length ?
+            '\n\t'+ JSON.stringify(options.meta) : '');
+};
+
+const logger = new (winston.Logger)({
+    transports: [
+        new (winston.transports.File)({
+            formatter: logFormatter,
+            level: 'silly',
+            name: 'fileAll',
+            filename: 'log.log',
+            json: false                                 // set json:false on the file transport(s)
+        })
+    ]
+});
 
 // ------------------------ Serial event functions:
 // this is called when the serial port is opened:
@@ -59,8 +81,18 @@ function showError(error) {
 }
 
 function sendToSerial(data) {
-  console.log("Enviando para a serial: " + data);
-  myPort.write(data);
+
+  var json = JSON.parse(data);
+
+  if(json.TIPO == "LOG"){
+    logger.log('silly',"ALERTA"+ " " +json.DATA + " " + json.MENSAGEM);
+    console.log("JSON log: " + JSON.stringify(json));
+  }else if(json.TIPO=="DADO"){
+    myPort.write(data);  
+    console.log("Enviado para a serial: " + data);
+  }else{
+    
+  }
 }
 
 // ------------------------ webSocket Server event functions

@@ -39,7 +39,7 @@ void setup() {
 
   Serial.begin(9600); // Starts the serial communication
   
-  while(!Serial){ /* NULL */ }
+  //while(!Serial){ /* NULL */ }
 
   String json = "";
   
