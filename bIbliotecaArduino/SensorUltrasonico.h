@@ -35,6 +35,8 @@ public:
   		unsigned long duration = pulseIn(portas[1], HIGH);
   		// Calculating the distance
   		float distance=duration*0.034/2;
+  		
+  		delayMicroseconds(60);
 
   		return distance;
   	}	

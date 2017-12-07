@@ -13,5 +13,5 @@ void loop() {
 
   Serial.println("Distância: " + String((int)sensor->Acao()));
     
-  delay(10); // delay in between reads for stability
+  delay(100); // delay in between reads for stability
 }
